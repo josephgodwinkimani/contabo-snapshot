@@ -1,5 +1,27 @@
-# credentials to use Contabo API
-CLIENT_ID=<my-ID-client>
-CLIENT_SECRET=<my-client-secret>
-API_USER=<my-contabo-API-username>
+# Copy this file to config.conf and fill it in, then keep it private: chmod 600 config.conf
+# config.conf is read as shell code, so keep every value in single quotes. A single quote inside a value is written '\''
+
+# credentials to use Contabo API (the API password is the one you set in the Contabo Customer Control Panel, not your account password)
+CLIENT_ID='<my-ID-client>'
+CLIENT_SECRET='<my-client-secret>'
+API_USER='<my-contabo-API-username>'
 API_PASSWORD='<my-contabo-API-password>'
+
+# REQUIRED: numeric ids of the instances to snapshot, separated by spaces, for example INSTANCE_IDS='202386857 202386858'
+# You find the instanceId in the Contabo Customer Control Panel or in the answer of GET https://api.contabo.com/v1/compute/instances
+# Instances that are not listed here are never touched, even if they belong to the same account.
+INSTANCE_IDS=''
+
+# Number of snapshots your plan allows per instance (from 1 to 10). The script makes room before it creates a new snapshot.
+SNAPSHOT_LIMIT=1
+
+# Only snapshots whose name starts with this prefix are rotated and new snapshots get it (for example auto-20261030-010000).
+# Snapshots with other names, for example one you made by hand, are never deleted.
+ROTATE_PREFIX='auto-'
+
+# Set to 1 to let the script delete snapshots without the prefix when it needs room. Default 0.
+ALLOW_DELETE_UNMANAGED=0
+
+# Optional settings with their defaults
+#SNAPSHOT_DESCRIPTION='Automatic snapshot by contabo_snapshot.sh'
+#LOCK_FILE='/var/lock/contabo_snapshot.lock'
